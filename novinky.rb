@@ -62,9 +62,9 @@ class Article
 
 	# Return data in JSON format
 	def to_json
-		{'url' => @url, 'author' => @author,'title' => @title, 'text' => @text,
-		 'date' => @date, 'comments_url' => @comments_url,
-		 'image_urls' => @images_urls }.to_json
+		{:url => @url, :author => @author, :title => @title, :text => @text,
+		 :date => @date, :comments_url => @comments_url,
+		 :image_urls => @images_urls }.to_json
 	end
 end
 

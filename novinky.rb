@@ -10,7 +10,7 @@ require 'pry-byebug'
 require 'benchmark'
 
 URL = "https://www.novinky.cz/archiv?id=966"
-$number_of_articles = 5
+$number_of_articles = 100
 
 class Article
 	attr_accessor :url
@@ -83,9 +83,14 @@ def parse
 	}
 
 	array_of_articles.each do |article|
-		response = Typhoeus.get(article.url)
-		article.extract_data(response.body)
+		request = Typhoeus::Request.new(article.url)
+		hydra.queue(request)
+		request.on_complete do |response|
+			article.extract_data(response.body)
+		end
 	end
+	hydra.run
+
 	array_of_articles.each do |article|
 		puts article.to_json
 		puts "\n"

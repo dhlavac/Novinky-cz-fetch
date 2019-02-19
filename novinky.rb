@@ -1,13 +1,9 @@
 #!/usr/bin/ruby
-
 require 'nokogiri'
 require 'open-uri'
 require 'typhoeus'
 require 'date'
 require 'json'
-
-require 'pry-byebug'
-require 'benchmark'
 
 URL = "https://www.novinky.cz/archiv?id=966"
 $number_of_articles = 100
@@ -68,7 +64,7 @@ class Article
 	end
 end
 
-# Fetch and parse HTML document
+# Fetch and parse List of articles
 def parse
 	hydra = Typhoeus::Hydra.new
 	array_of_articles = Array.new
@@ -97,13 +93,5 @@ def parse
 	end
 end
 
-
-def bench
-	time = Benchmark.measure {
-		parse
-	}
-	puts "Benchmark"
-	puts time.real
-end
-
-bench
+# Start fetching data
+parse
